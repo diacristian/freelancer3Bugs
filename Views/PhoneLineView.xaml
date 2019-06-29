@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="FL1.Views.PhoneLineView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:FL1.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="80">
+
+    <controls:SquareButton2 x:Name="PhoneLineButton" BaseColor="{Binding PhoneLineColor}" BevelWidth="4" BevelHeight="4">
+        <StackPanel Orientation="Vertical">
+            <Label x:Name="PhoneLineName" FontSize="14" HorizontalAlignment="Center" />
+            <Label x:Name="PhoneLineStatus" FontSize="18" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </controls:SquareButton2>
+
+</UserControl>

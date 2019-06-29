@@ -1,0 +1,145 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:FL1.Controls">
+
+    <Style TargetType="{x:Type local:SquareButton2}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SquareButton2}">
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="0" SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Grid Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
+                                        <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftMargin}" />
+                                        <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RightGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RightMargin}" />
+                                        <Path Data="M0,0 L100,0 L50,50 Z" Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TopGradient}" Stretch="Uniform" VerticalAlignment="Top" />
+                                        <Path Data="M0,100 L100,100 L50,50 Z" Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BottomGradient, UpdateSourceTrigger=PropertyChanged}" Stretch="Uniform" VerticalAlignment="Bottom" />
+                                        <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CenterGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CenterMargin}" />
+                                    </Grid>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.Background>
+                        <ContentPresenter x:Name="contentPresenter" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Effect" TargetName="border">
+                                <Setter.Value>
+                                    <local:LightenEffect />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=isLandscape}" Value="true">
+                            <Setter Property="Background" TargetName="border">
+                                <Setter.Value>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Grid Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
+                                                <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TopGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TopMargin}" />
+                                                <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BottomGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BottomMargin}" />
+                                                <Path Data="M0,0 L0,100 L50,50 Z" Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftGradient}" Stretch="Uniform" HorizontalAlignment="Left" />
+                                                <Path Data="M100,0 L100,100 L50,50 Z" Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RightGradient}" Stretch="Uniform" HorizontalAlignment="Right" />
+                                                <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CenterGradient, UpdateSourceTrigger=PropertyChanged}" Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CenterMargin}" />
+                                            </Grid>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseColor, UpdateSourceTrigger=PropertyChanged}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <local:BevelRadiusConverter x:Key="bevelRadiusConverter" />
+    <Style TargetType="{x:Type local:RoundButton2}">
+        <Setter Property="Background" Value="Gray" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:RoundButton2}">
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Ellipse x:Name="ellipse" Fill="{TemplateBinding Background}" />
+
+                            <ContentPresenter x:Name="contentPresenter" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Effect" TargetName="border">
+                                <Setter.Value>
+                                    <local:LightenEffect />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="Effect" TargetName="ellipse">
+                                <Setter.Value>
+                                    <local:BevelEffect>
+                                        <local:BevelEffect.BevelRatio>
+                                            <MultiBinding Converter="{StaticResource bevelRadiusConverter}">
+                                                <Binding RelativeSource="{RelativeSource  TemplatedParent}" Path="BevelWidth" />
+                                                <Binding ElementName="ellipse" Path="ActualWidth" />
+                                            </MultiBinding>
+                                        </local:BevelEffect.BevelRatio>
+                                    </local:BevelEffect>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:SpeechBubble}">
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="4" Direction="270" ShadowDepth="1" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SpeechBubble}">
+                    <Grid>
+                        <Grid x:Name="background" RenderTransformOrigin="0.5,0.5">
+                            <Path StrokeThickness="0.5" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeechBubble}}, Path=BubbleFill}" Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeechBubble}}, Path=BubbleStroke}" Data="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeechBubble}}, Path=BubbleOutline}" />
+                            <Path Data="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeechBubble}}, Path=HighlightOutline}">
+                                <Path.Fill>
+                                    <LinearGradientBrush EndPoint="0,1">
+                                        <GradientStop Color="#A0FFFFFF" Offset="0" />
+                                        <GradientStop Color="#40FFFFFF" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Path.Fill>
+                                <Path.Effect>
+                                    <BlurEffect Radius="1" />
+                                </Path.Effect>
+                            </Path>
+                        </Grid>
+                        <ContentPresenter x:Name="presenter" Content="{TemplateBinding Content}" Margin="6,6,18,6" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Right}" Value="True">
+                            <Setter TargetName="background" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="presenter" Property="Margin" Value="18,6,6,6" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="FL1.Controls.SpeakerSymbol"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:FL1.Controls"
+             mc:Ignorable="d"
+
+             d:DesignHeight="100" d:DesignWidth="100" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp" MouseMove="UserControl_MouseMove">
+    <Viewbox>
+        <Canvas Width="100" Height="100">
+            <Path Data="M25.572,65L4,65C1.791,65 0,63.209 0,61L0,39C0,36.791 1.791,35 4,35L25.465,35L48.708,18.725L48.706,18.723C49.355,18.267 50.146,18 51,18C53.209,18 55,19.791 55,22L55,78C55,80.209 53.209,82 51,82C50.448,82 49.922,81.888 49.443,81.686L49.311,81.622L25.572,65z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=SpeakerColor}" />
+            <Path Data="M63.143,67.143C62.375,67.143 61.608,66.85 61.022,66.264C59.85,65.093 59.85,63.194 61.022,62.022C67.649,55.393 67.649,44.608 61.022,37.98C59.85,36.809 59.85,34.909 61.022,33.737C62.194,32.566 64.092,32.566 65.264,33.737C74.231,42.705 74.231,57.296 65.264,66.264C64.679,66.85 63.91,67.143 63.143,67.143z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=SpeakerBarColor1}" />
+            <Path Data="M73.566,74.566C72.798,74.566 72.031,74.273 71.445,73.687C70.273,72.515 70.273,70.616 71.445,69.445C76.64,64.251 79.5,57.346 79.5,50C79.5,42.654 76.64,35.749 71.445,30.554C70.273,29.383 70.273,27.483 71.445,26.312C72.617,25.14 74.515,25.14 75.687,26.312C82.015,32.639 85.5,41.052 85.5,50C85.5,58.948 82.015,67.361 75.688,73.688C75.102,74.273 74.334,74.566 73.566,74.566z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=SpeakerBarColor2}" />
+            <Path Data="M83.991,81.991C83.223,81.991 82.456,81.698 81.87,81.112C80.698,79.941 80.698,78.041 81.87,76.87C89.047,69.692 93,60.149 93,50C93,39.85 89.047,30.307 81.87,23.13C80.698,21.958 80.698,20.059 81.87,18.887C83.042,17.715 84.94,17.716 86.112,18.887C94.423,27.198 99,38.247 99,50C99,61.753 94.423,72.802 86.112,81.112C85.526,81.698 84.759,81.991 83.991,81.991z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=SpeakerBarColor3}" />
+
+            <Path Data="M45.375,25.125C47.25,23.75 50.625,20.75 51.25,21.125C51.875,21.5 49.875,24.75 48.25,26.375C46.625,28 32.75,37.75 31,38.75C29.25,39.75 27.688,40.699 26.875,39.75C25.375,38 43.5,26.5 45.375,25.125zM2.875,40.142C4.251,40.137 4.438,38.272 2.875,38.25C1.417,38.229 1.667,40.146 2.875,40.142z M89.542,69.5C87,74.436 81.628,78.279 83,79.625C84.641,81.234 88.522,74.476 90.792,70.083C96.584,58.875 95.625,48.75 95.625,48.75C95.625,48.75 95.958,57.042 89.542,69.5zM79.958,64.292C82.333,58.667 81.875,52.375 81.875,52.375C81.875,52.375 81.292,57.875 78.708,63.292C76.999,66.876 72.335,70.469 73.625,71.875C75,73.375 79.014,66.528 79.958,64.292zM63.375,38.625C64.812,38.589 64.797,36.578 63.281,36.578C61.938,36.578 62.141,38.656 63.375,38.625zM73.5,29.875C75,29.813 74.439,28.054 73.625,28.063C72.141,28.078 72.376,29.922 73.5,29.875z M83,20.375C81.875,20.437 81.938,22.219 83.078,22.172C84.333,22.12 84.139,20.312 83,20.375z M67,59.292C68,57 68.292,52.209 68.292,52.209C68.32,52.413 67.334,55.834 65.584,58.917C64.289,61.199 62.127,62.128 63.584,63.417C64.667,64.375 66,61.583 67,59.292z" Fill="White" Opacity="0.7">
+                <Path.Effect>
+                    <BlurEffect Radius="2" />
+                </Path.Effect>
+            </Path>
+            <TextBlock Canvas.Left="2" TextWrapping="Wrap" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=Text}" Canvas.Top="35" Width="51" Height="26" Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpeakerSymbol}}, Path=TextColor}" FontSize="10.667" />
+        </Canvas>
+    </Viewbox>
+</UserControl>

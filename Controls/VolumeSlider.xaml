@@ -1,0 +1,197 @@
+﻿<Slider x:Class="FL1.Controls.VolumeSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:FL1.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="38" d:DesignWidth="300" SizeChanged="Slider_SizeChanged">
+    <Slider.Resources>
+        <local:BarWidthConverter x:Key="barWidthConverter" />
+        <Style TargetType="local:VolumeSlider">
+            <Setter Property="Maximum" Value="100" />
+            <Setter Property="LargeChange" Value="10" />
+            <Setter Property="SmallChange" Value="10" />
+            <Setter Property="Background" Value="#444444" />
+        </Style>
+    </Slider.Resources>
+    <Slider.Template>
+        <ControlTemplate TargetType="{x:Type Slider}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Padding="6" CornerRadius="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Path Grid.Row="1" Data="M14.273,17.343C14.094,17.343 13.914,17.28 13.777,17.153C13.503,16.899 13.503,16.488 13.777,16.235C14.991,15.111 15.66,13.616 15.66,12.026C15.66,10.436 14.991,8.941 13.777,7.817C13.503,7.563 13.503,7.152 13.777,6.899C14.051,6.645 14.495,6.645 14.769,6.899C16.248,8.269 17.063,10.089 17.063,12.026C17.063,13.963 16.248,15.784 14.769,17.153C14.632,17.28 14.452,17.343 14.273,17.343zM17.765,19.488C19.811,17.486 20.938,14.825 20.938,11.994C20.938,9.163 19.811,6.502 17.765,4.5C17.477,4.218 17.009,4.218 16.721,4.5C16.433,4.782 16.433,5.24 16.721,5.522C18.488,7.251 19.461,9.549 19.461,11.994C19.461,14.439 18.488,16.737 16.721,18.466C16.433,18.748 16.433,19.206 16.721,19.488C16.865,19.629 17.054,19.7 17.243,19.7C17.432,19.7 17.621,19.63 17.765,19.488z M11.043,18.87L11.063,18.884C11.137,18.928 11.218,18.952 11.303,18.952C11.644,18.952 11.92,18.564 11.92,18.086L11.92,5.965C11.92,5.487 11.644,5.099 11.303,5.099C11.171,5.099 11.049,5.157 10.949,5.256L10.949,5.256L7.365,8.779L4.054,8.779C3.713,8.779 3.437,9.167 3.437,9.645L3.437,14.407C3.437,14.885 3.713,15.273 4.054,15.273L7.381,15.273L11.043,18.87z">
+                        <Path.Fill>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#c7c7c7" />
+                                    <GradientStop Color="#7e7e7e" Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Path.Fill>
+                    </Path>
+                    <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed" Grid.Column="1" />
+                    <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed" Grid.Column="1" />
+                    <Border x:Name="TrackBackground" BorderBrush="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VolumeSlider}}, Path=SliderBorder}" BorderThickness="2" Background="Transparent" Height="10" Margin="5,0" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" CornerRadius="1">
+                        <Canvas Margin="-6,-1">
+                            <Rectangle  Height="6" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VolumeSlider}}, Path=SliderWidth}" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VolumeSlider}}, Path=SliderFill}" RadiusY="1" RadiusX="1" Margin="6,1" />
+                            <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="8" Visibility="Hidden" />
+                        </Canvas>
+                    </Border>
+                    <Track x:Name="PART_Track" Grid.Row="1" Grid.Column="1">
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton x:Name="decreaseButton" Command="Slider.DecreaseLarge">
+                                <RepeatButton.Style>
+                                    <Style TargetType="{x:Type RepeatButton}">
+                                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Focusable" Value="False" />
+                                        <Setter Property="IsTabStop" Value="False" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </RepeatButton.Style>
+                            </RepeatButton>
+                        </Track.DecreaseRepeatButton>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Command="Slider.IncreaseLarge">
+                                <RepeatButton.Style>
+                                    <Style TargetType="{x:Type RepeatButton}">
+                                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Focusable" Value="False" />
+                                        <Setter Property="IsTabStop" Value="False" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </RepeatButton.Style>
+                            </RepeatButton>
+                        </Track.IncreaseRepeatButton>
+                        <Track.Thumb>
+                            <Thumb x:Name="Thumb" Focusable="False" Height="24" OverridesDefaultStyle="True" VerticalAlignment="Center" Width="15">
+                                <Thumb.Template>
+                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+                                            <Rectangle x:Name="grip" Width="15" Height="24" Stretch="Fill" SnapsToDevicePixels="True" Stroke="Transparent" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center">
+                                                <Rectangle.Fill>
+                                                    <LinearGradientBrush EndPoint="0,1">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Color="#e7e7e7" Offset="0.05" />
+                                                            <GradientStop Color="#a5a5a5" Offset="0.38" />
+                                                            <GradientStop Color="#6d6d6d" Offset="0.69" />
+                                                            <GradientStop Color="#949495" Offset="0.95" />
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <Line X1="7" Y1="3" X2="7" Y2="19" Stroke="#898c8b" />
+                                            <Line X1="8" Y1="3" X2="8" Y2="19" Stroke="#b9baba" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Fill" TargetName="grip" Value="#FFDCECFC" />
+                                                <Setter Property="Stroke" TargetName="grip" Value="#FF7EB4EA" />
+                                            </Trigger>
+                                            <Trigger Property="IsDragging" Value="True">
+                                                <Setter Property="Fill" TargetName="grip" Value="#FFDAECFC" />
+                                                <Setter Property="Stroke" TargetName="grip" Value="#FF569DE5" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Fill" TargetName="grip" Value="#FFF0F0F0" />
+                                                <Setter Property="Stroke" TargetName="grip" Value="#FFD9D9D9" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                        </Track.Thumb>
+                    </Track>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="TickPlacement" Value="TopLeft">
+                    <Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
+                    <Setter Property="Template" TargetName="Thumb">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+                                    <Path x:Name="grip" Data="M0,6C0,6 5.5,0 5.5,0 5.5,0 11,6 11,6 11,6 11,18 11,18 11,18 0,18 0,18 0,18 0,6 0,6z" Fill="#FFF0F0F0" Stretch="Fill" SnapsToDevicePixels="True" Stroke="#FFACACAC" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFDCECFC" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FF7EB4EA" />
+                                    </Trigger>
+                                    <Trigger Property="IsDragging" Value="True">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFDAECFC" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FF569DE5" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFF0F0F0" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FFD9D9D9" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Margin" TargetName="TrackBackground" Value="5,2,5,0" />
+                </Trigger>
+                <Trigger Property="TickPlacement" Value="BottomRight">
+                    <Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+                    <Setter Property="Template" TargetName="Thumb">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+                                    <Path x:Name="grip" Data="M0,12C0,12 5.5,18 5.5,18 5.5,18 11,12 11,12 11,12 11,0 11,0 11,0 0,0 0,0 0,0 0,12 0,12z" Fill="#FFF0F0F0" Stretch="Fill" SnapsToDevicePixels="True" Stroke="#FFACACAC" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFDCECFC" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FF7EB4EA" />
+                                    </Trigger>
+                                    <Trigger Property="IsDragging" Value="True">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFDAECFC" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FF569DE5" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Fill" TargetName="grip" Value="#FFF0F0F0" />
+                                        <Setter Property="Stroke" TargetName="grip" Value="#FFD9D9D9" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Margin" TargetName="TrackBackground" Value="5,0,5,2" />
+                </Trigger>
+                <Trigger Property="TickPlacement" Value="Both">
+                    <Setter Property="Visibility" TargetName="TopTick" Value="Visible" />
+                    <Setter Property="Visibility" TargetName="BottomTick" Value="Visible" />
+                </Trigger>
+                <Trigger Property="IsSelectionRangeEnabled" Value="True">
+                    <Setter Property="Visibility" TargetName="PART_SelectionRange" Value="Visible" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Foreground" TargetName="Thumb" Value="Blue" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Slider.Template>
+</Slider>
